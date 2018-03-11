@@ -1,0 +1,108 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <property name="id.type" value="BIGINT"/>
+    <property name="int.type" value="INT"/>
+    <property name="string.type" value="VARCHAR(255)"/>
+    <property name="string512.type" value="VARCHAR(512)"/>
+    <property name="sub-domain.type" value="VARCHAR(63)"/>
+    <property name="enum.type" value="VARCHAR(100)"/>
+    <property name="text.type" value="TEXT"/>
+    <property name="version.type" value="BIGINT"/>
+    <property name="instant.type" value="BIGINT"/>
+    <property name="timestamp.type" value="TIMESTAMP"/>
+    <property name="date.type" value="DATE"/>
+    <property name="time.type" value="TIME"/>
+    <property name="score.type" value="NUMERIC(5,2)"/>
+    <property name="float.type" value="FLOAT"/>
+    <property name="boolean.type" value="BOOLEAN"/>
+
+    <changeSet id="CREATE_ACCOUNTS_TABLE" author="zenkovich.alexsandr@gmail.com">
+        <createTable tableName="ACCOUNTS">
+            <column name="ID" type="${id.type}" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="NAME" type="${string.type}">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ACCOUNT_NAME_UNIQUE"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="CREATE_TRANSACTIONS_TABLE" author="zenkovich.alexsandr@gmail.com">
+        <createTable tableName="TRANSACTIONS">
+            <column name="ID" type="${id.type}" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="CREATION_DATE" type="${timestamp.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="${enum.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FROM_ID" type="${id.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TO_ID" type="${id.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="APPROVAL_DATE" type="${timestamp.type}"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="TRANSACTIONS"
+                                 baseColumnNames="FROM_ID"
+                                 constraintName="TRANSACTIONS_FROM_ID_ACCOUNTS_FK"
+                                 referencedTableName="ACCOUNTS"
+                                 referencedColumnNames="ID"/>
+
+        <addForeignKeyConstraint baseTableName="TRANSACTIONS"
+                                 baseColumnNames="TO_ID"
+                                 constraintName="TRANSACTIONS_TO_ID_ACCOUNTS_FK"
+                                 referencedTableName="ACCOUNTS"
+                                 referencedColumnNames="ID"/>
+    </changeSet>
+
+    <changeSet id="CREATE_USERS_TABLE" author="zenkovich.alexsandr@gmail.com">
+        <createTable tableName="USERS">
+            <column name="ID" type="${id.type}" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="FIRST_NAME" type="${text.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_NAME" type="${text.type}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="CREATE_USER_ACCOUNT_TABLE" author="zenkovich.alexsandr@gmail.com">
+        <createTable tableName="USER_ACCOUNT">
+            <column name="USER_ID" type="${id.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACCOUNT_ID" type="${id.type}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey constraintName="PK_USER_ACCOUNT_USER_ID_ACCOUNT_ID"
+                       tableName="USER_ACCOUNT"
+                       columnNames="USER_ID, ACCOUNT_ID"/>
+
+        <addForeignKeyConstraint baseTableName="USER_ACCOUNT"
+                                 baseColumnNames="USER_ID"
+                                 constraintName="USER_ACCOUNT_USER_ID_USERS_FK"
+                                 referencedTableName="USERS"
+                                 referencedColumnNames="ID"/>
+
+        <addForeignKeyConstraint baseTableName="USER_ACCOUNT"
+                                 baseColumnNames="ACCOUNT_ID"
+                                 constraintName="USER_ACCOUNT_ACCOUNT_ID_ACCOUNTS_FK"
+                                 referencedTableName="ACCOUNTS"
+                                 referencedColumnNames="ID"/>
+    </changeSet>
+
+</databaseChangeLog>
