@@ -1,6 +1,7 @@
 package nl.living.it.assignment.model;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -11,7 +12,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class BaseEntity implements BaseIdentifiable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Override

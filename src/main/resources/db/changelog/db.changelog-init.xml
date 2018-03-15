@@ -72,10 +72,18 @@
             <column name="FIRST_NAME" type="${text.type}">
                 <constraints nullable="false"/>
             </column>
+            <column name="USERNAME" type="${text.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PASSWORD" type="${text.type}">
+                <constraints nullable="false"/>
+            </column>
             <column name="LAST_NAME" type="${text.type}">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
+        <addUniqueConstraint tableName="USERS" columnNames="USERNAME" constraintName="UNIQUE_USERNAME_CONSTRAINT"/>
     </changeSet>
 
     <changeSet id="CREATE_USER_ACCOUNT_TABLE" author="zenkovich.alexsandr@gmail.com">
@@ -103,6 +111,16 @@
                                  constraintName="USER_ACCOUNT_ACCOUNT_ID_ACCOUNTS_FK"
                                  referencedTableName="ACCOUNTS"
                                  referencedColumnNames="ID"/>
+    </changeSet>
+    
+    <changeSet id="ADD_USER" author="zenkovich.alexsandr@gmail.com">
+        <insert tableName="USERS">
+            <column name="ID" value="1"/>
+            <column name="FIRST_NAME" value="Alexander"/>
+            <column name="LAST_NAME" value="Zenkovich"/>
+            <column name="USERNAME" value="a.zenkovich"/>
+            <column name="PASSWORD" value="$2a$10$IYnDlXDgAbapD76g8kjLx.a0rSDNU0.WPjpJONb/wWAHAncWBsKCK"/>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

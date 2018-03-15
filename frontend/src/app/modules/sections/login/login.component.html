@@ -1,8 +1,36 @@
-<form class="form-signin">
-  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-  <label for="inputEmail" class="sr-only">Email address</label>
-  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-  <label for="inputPassword" class="sr-only">Password</label>
-  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+  <div class="auth-form">
+
+    <div class="input-wrapper">
+      <mat-form-field>
+        <input matInput placeholder="Username" id="username" name="username"
+               [formControl]="username"
+               [maxLength]="255">
+        <mat-error *ngIf="username.hasError('required')">
+          <span>Username is required</span>
+          <span class="width-fill"></span>
+          <span><mat-icon>warning</mat-icon></span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="input-wrapper">
+      <mat-form-field>
+        <input matInput placeholder="Password" id="password" name="password"
+               [formControl]="password"
+               [maxLength]="255">
+        <mat-error *ngIf="password.hasError('required')">
+          <span>Password is required</span>
+          <span class="width-fill"></span>
+          <span><mat-icon>warning</mat-icon></span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+  </div>
+
+  <div class="auth-actions">
+    <button mat-raised-button class="button" name="action">Login</button>
+  </div>
+
 </form>
