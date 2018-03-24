@@ -44,4 +44,6 @@ public class Transaction extends BaseEntity {
 
     @Column
     private LocalDateTime approvalDate;
+
+    private double money;
 }

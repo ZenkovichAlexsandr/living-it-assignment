@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  * @since 23.03.18.
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
     User findByUsername(String username);
 }

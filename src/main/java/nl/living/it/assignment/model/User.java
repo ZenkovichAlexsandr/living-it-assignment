@@ -31,7 +31,6 @@ import java.util.Set;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "users")
 public class User extends BaseEntity {
     public static final String JOIN_COLUMN = "USER_ID";
-    public static final String USER_ACCOUNT_JOIN_TABLE = "USER_ACCOUNT";
 
     @Column(nullable = false)
     private String firstName;
@@ -41,10 +40,4 @@ public class User extends BaseEntity {
     private String username;
     @Column(nullable = false)
     private String password;
-
-    @ManyToMany
-    @JoinTable(name = User.USER_ACCOUNT_JOIN_TABLE,
-            joinColumns = @JoinColumn(name = User.JOIN_COLUMN),
-            inverseJoinColumns = @JoinColumn(name = Account.JOIN_COLUMN))
-    private Set<Account> accounts = new HashSet<>();
 }

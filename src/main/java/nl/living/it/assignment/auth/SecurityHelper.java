@@ -1,6 +1,7 @@
 package nl.living.it.assignment.auth;
 
 import nl.living.it.assignment.auth.exception.AuthenticationException;
+import nl.living.it.assignment.auth.model.JwtUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -20,5 +21,11 @@ public class SecurityHelper {
         }
 
         throw new AuthenticationException("Authentication failed.");
+    }
+
+    public static Long getCurrentUserId() {
+        final JwtUserDetails authentication = (JwtUserDetails) SecurityHelper
+                .getAuthenticationWithCheck().getPrincipal();
+        return authentication.getId();
     }
 }
