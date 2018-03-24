@@ -19,10 +19,9 @@ export class AuthenticationService {
       .append('Content-Type', 'application/json');
 
     return this.httpClient.post<any>(Endpoints.AUTH.login, JSON.stringify(loginRequest), {
-      headers,
-      withCredentials: true
+      headers
     }).do(token => {
-      localStorage.setItem(AuthConstants.AUTH_TOKEN_NAME, token.access_token);
+      localStorage.setItem(AuthConstants.AUTH_TOKEN_NAME, token.token);
       this.router.navigateByUrl(States.PAGE);
     });
   }

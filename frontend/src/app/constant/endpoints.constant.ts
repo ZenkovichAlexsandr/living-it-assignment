@@ -1,7 +1,7 @@
 import { environment } from '../../environments/environment';
 
 class Auth {
-  static readonly login = `${environment.gateway}/oauth/token?client_id=browser`;
+  static readonly login = `${environment.gateway}/auth/login`;
 }
 
 export class Endpoints {

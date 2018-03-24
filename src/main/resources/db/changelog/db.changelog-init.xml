@@ -119,7 +119,7 @@
             <column name="FIRST_NAME" value="Alexander"/>
             <column name="LAST_NAME" value="Zenkovich"/>
             <column name="USERNAME" value="a.zenkovich"/>
-            <column name="PASSWORD" value="$2a$10$IYnDlXDgAbapD76g8kjLx.a0rSDNU0.WPjpJONb/wWAHAncWBsKCK"/>
+            <column name="PASSWORD" value="fb435aeb0bc0afc52a5a96108857888c1d7314a6282cf2ef619001928558df72052d4c40a58a864e"/>
         </insert>
     </changeSet>
 
