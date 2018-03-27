@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    List<Transaction> findAllByStatusAndFromUsers(TransactionStatus status, Long userId);
-    Transaction findByIdAndFromUsers(Long id, Long userId);
+    List<Transaction> findAllByStatusAndFromUsers_Id(TransactionStatus status, Long userId);
+    Transaction findByIdAndFromUsers_Id(Long id, Long userId);
+    List<Transaction> findAllByFromIdOrToId(Long fromId, Long toId);
 }

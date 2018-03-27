@@ -1,6 +1,6 @@
 package nl.living.it.assignment.service;
 
-import nl.living.it.assignment.dto.UserListDto;
+import nl.living.it.assignment.dto.UserDto;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import java.util.List;
  * @since 24.03.18.
  */
 public interface UserService {
-    List<UserListDto> lookup();
+    List<UserDto> lookup();
 }

@@ -5,25 +5,28 @@ import { Endpoints } from '../constant/endpoints.constant';
 import { AuthConstants } from '../constant/auth.constant';
 import { States } from '../constant/states.constant';
 import { Router } from '@angular/router';
+import { LoginResponse, User } from '../models/user.model';
 
 @Injectable()
 export class AuthenticationService {
 
-  constructor(private httpClient: HttpClient,
+  constructor(private http: HttpClient,
               private router: Router) {
   }
 
-  login(loginRequest: FormData): Observable<any> {
-    //TODO: any
+  login(loginRequest: FormData): Observable<LoginResponse> {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/json');
 
-    return this.httpClient.post<any>(Endpoints.AUTH.login, JSON.stringify(loginRequest), {
+    return this.http.post<LoginResponse>(Endpoints.AUTH.login, JSON.stringify(loginRequest), {
       headers
     }).do(token => {
       localStorage.setItem(AuthConstants.AUTH_TOKEN_NAME, token.token);
-      this.router.navigateByUrl(States.ACCOUNTS);
     });
+  }
+
+  getMe():Observable<User> {
+    return this.http.get<User>(Endpoints.AUTH.getMe);
   }
 
   logOut() {

@@ -21,6 +21,11 @@ const routes: Routes = [
     canLoad: [ AuthGuard ]
   },
   {
+    path: `${States.ACCOUNTS}/:id`,
+    loadChildren: './modules/sections/account-details/account-details.module#AccountDetailsModule',
+    canLoad: [ AuthGuard ]
+  },
+  {
     path: States.TRANSACTION_CREATE,
     loadChildren: './modules/sections/transaction-create/transaction-create.module#TransactionCreateModule',
     canLoad: [ AuthGuard ]

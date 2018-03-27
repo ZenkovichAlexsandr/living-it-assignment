@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserList } from '../../../models/user.model';
+import { User } from '../../../models/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DecimalValidator } from '../../../validators/decimal.validator';
@@ -15,7 +15,7 @@ import { Account } from '../../../models/accounts.model';
   styleUrls: [ './account-create.component.scss' ]
 })
 export class AccountCreateComponent extends BaseCreatePage<Account> {
-  userList: UserList[] = [];
+  userList: User[] = [];
 
   name: FormControl;
   money: FormControl;

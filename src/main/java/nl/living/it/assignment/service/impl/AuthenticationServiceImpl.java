@@ -1,11 +1,14 @@
 package nl.living.it.assignment.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import nl.living.it.assignment.auth.SecurityHelper;
 import nl.living.it.assignment.auth.exception.AuthenticationException;
 import nl.living.it.assignment.auth.model.JwtUserDetails;
 import nl.living.it.assignment.auth.service.AuthenticationHelper;
 import nl.living.it.assignment.dto.LoginRequestDto;
 import nl.living.it.assignment.dto.LoginResponseDto;
+import nl.living.it.assignment.dto.UserDto;
+import nl.living.it.assignment.exception.EntityNotFoundException;
 import nl.living.it.assignment.model.User;
 import nl.living.it.assignment.repository.UserRepository;
 import nl.living.it.assignment.service.AuthenticationService;
@@ -30,7 +33,8 @@ import java.util.Optional;
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationHelper authenticationHelper;
     private final AuthenticationManager authenticationManager;
-    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final UserTransformer transformer;
 
     @Override
     public LoginResponseDto login(final LoginRequestDto loginRequestDto) {
@@ -61,5 +65,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } catch (BadCredentialsException exception) {
             throw new AuthenticationException("Username or password was incorrect. Please try again.", exception);
         }
+    }
+
+    @Override
+    public UserDto getMe() throws EntityNotFoundException {
+        final Authentication authentication = SecurityHelper.getAuthenticationWithCheck();
+        final User user = Optional.ofNullable(userRepository.findByUsername(authentication.getName()))
+                .orElseThrow(() -> new EntityNotFoundException("user.not.found", authentication.getName()));
+        return transformer.transform(user);
     }
 }

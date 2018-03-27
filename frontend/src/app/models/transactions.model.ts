@@ -9,4 +9,11 @@ export interface TransactionList {
   creationDate: number[];
   from: number;
   to: number;
+  status: TransactionStatus;
+}
+
+export enum TransactionStatus {
+  NEW = 'NEW',
+  APPROVED = 'APPROVED',
+  DECLINED = 'DECLINED'
 }

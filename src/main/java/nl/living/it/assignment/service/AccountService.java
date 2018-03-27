@@ -1,8 +1,10 @@
 package nl.living.it.assignment.service;
 
+import nl.living.it.assignment.dto.AccountDetailsDto;
 import nl.living.it.assignment.dto.AccountDto;
 import nl.living.it.assignment.dto.AccountListDto;
 import nl.living.it.assignment.exception.BusinessException;
+import nl.living.it.assignment.exception.EntityNotFoundException;
 
 import java.util.List;
 
@@ -13,5 +15,5 @@ import java.util.List;
 public interface AccountService {
     List<AccountListDto> findAll();
     AccountDto create(AccountDto account) throws BusinessException;
-
+    AccountDetailsDto findOne(Long id) throws EntityNotFoundException;
 }

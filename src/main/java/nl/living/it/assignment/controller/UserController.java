@@ -1,7 +1,7 @@
 package nl.living.it.assignment.controller;
 
 import lombok.RequiredArgsConstructor;
-import nl.living.it.assignment.dto.UserListDto;
+import nl.living.it.assignment.dto.UserDto;
 import nl.living.it.assignment.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class UserController {
     private final UserService service;
 
     @GetMapping
-    public List<UserListDto> lookup() {
+    public List<UserDto> lookup() {
         return service.lookup();
     }
 }

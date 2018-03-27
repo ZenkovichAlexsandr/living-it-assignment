@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.living.it.assignment.model.TransactionStatus;
 
 import java.time.LocalDateTime;
 
@@ -22,4 +23,5 @@ public class TransactionListDto implements Dto {
     private LocalDateTime creationDate;
     private String from;
     private String to;
+    private TransactionStatus status;
 }

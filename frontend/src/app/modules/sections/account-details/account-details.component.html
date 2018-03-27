@@ -1,0 +1,38 @@
+<div *ngIf="accountDetails">
+  <h1>{{accountDetails.name}}</h1>
+  <h2>Users</h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of accountDetails.users">
+      <td>{{user.fullName}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h2>Transactions</h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>From</th>
+      <th>To</th>
+      <th>Creation date</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let transaction of accountDetails.transactions">
+      <td>{{transaction.from}}</td>
+      <td>{{transaction.to}}</td>
+      <td>{{transaction.creationDate}}</td>
+      <td>{{transaction.status}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

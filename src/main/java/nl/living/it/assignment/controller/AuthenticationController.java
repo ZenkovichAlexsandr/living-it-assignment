@@ -3,9 +3,12 @@ package nl.living.it.assignment.controller;
 import lombok.RequiredArgsConstructor;
 import nl.living.it.assignment.dto.LoginRequestDto;
 import nl.living.it.assignment.dto.LoginResponseDto;
+import nl.living.it.assignment.dto.UserDto;
+import nl.living.it.assignment.exception.EntityNotFoundException;
 import nl.living.it.assignment.service.AuthenticationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,5 +29,11 @@ public class AuthenticationController {
     @ResponseStatus(value = HttpStatus.OK)
     public LoginResponseDto login(@RequestBody final LoginRequestDto loginRequestDto) {
         return authenticationService.login(loginRequestDto);
+    }
+
+    @GetMapping(value = "/me")
+    @ResponseStatus(value = HttpStatus.OK)
+    public UserDto me() throws EntityNotFoundException {
+        return authenticationService.getMe();
     }
 }

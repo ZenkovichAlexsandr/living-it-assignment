@@ -23,11 +23,12 @@ export abstract class BaseCreatePage<T> implements OnInit {
   abstract buildForm();
 
   onSubmit() {
-    if (this.form.valid) {
-      this.create();
-    } else {
-      this.toastNotificationService.error([ "There are some validation errors." ]);
+    if (!this.form.valid) {
+      this.toastNotificationService.error([ 'There are some validation errors.' ]);
+      return;
     }
+
+    this.create();
   }
 
   private create() {

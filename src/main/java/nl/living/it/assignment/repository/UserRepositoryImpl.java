@@ -1,6 +1,6 @@
 package nl.living.it.assignment.repository;
 
-import nl.living.it.assignment.dto.UserListDto;
+import nl.living.it.assignment.dto.UserDto;
 import nl.living.it.assignment.model.User;
 
 import javax.persistence.EntityManager;
@@ -20,9 +20,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     private EntityManager entityManager;
 
     @Override
-    public List<UserListDto> lookup() {
+    public List<UserDto> lookup() {
         final CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        final CriteriaQuery<UserListDto> criteriaQuery = cb.createQuery(UserListDto.class);
+        final CriteriaQuery<UserDto> criteriaQuery = cb.createQuery(UserDto.class);
         final Root<User> from = criteriaQuery.from(User.class);
 
         final Expression<String> fullName = cb.concat(

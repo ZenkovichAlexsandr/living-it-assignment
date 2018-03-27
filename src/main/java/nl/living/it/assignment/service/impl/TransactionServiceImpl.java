@@ -13,6 +13,8 @@ import nl.living.it.assignment.model.TransactionStatus;
 import nl.living.it.assignment.repository.AccountRepository;
 import nl.living.it.assignment.repository.TransactionRepository;
 import nl.living.it.assignment.service.TransactionService;
+import nl.living.it.assignment.service.transformers.TransactionListTransformer;
+import nl.living.it.assignment.service.transformers.TransactionTransformer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +35,8 @@ import static nl.living.it.assignment.model.TransactionStatus.NEW;
 public class TransactionServiceImpl implements TransactionService {
     private final AccountRepository accountRepository;
     private final TransactionRepository repository;
+    private final TransactionTransformer transformer;
+    private final TransactionListTransformer listTransformer;
 
     @Override
     public TransactionDto create(final TransactionDto transaction) throws BusinessException {
@@ -54,21 +58,14 @@ public class TransactionServiceImpl implements TransactionService {
                 .money(transaction.getMoney())
                 .build());
 
-        return TransactionDto.builder()
-                .from(newTransaction.getFrom().getId())
-                .to(newTransaction.getTo().getId())
-                .money(newTransaction.getMoney())
-                .build();
+        return transformer.transform(newTransaction);
     }
 
     @Override
     public List<TransactionListDto> findByStatus(final TransactionStatus status) {
-        return repository.findAllByStatusAndFromUsers(status, SecurityHelper.getCurrentUserId())
+        return repository.findAllByStatusAndFromUsers_Id(status, SecurityHelper.getCurrentUserId())
                 .stream()
-                .map(it -> new TransactionListDto(it.getId(),
-                        it.getCreationDate(),
-                        it.getFrom().getName(),
-                        it.getTo().getName()))
+                .map(listTransformer::transform)
                 .collect(Collectors.toList());
     }
 
@@ -76,7 +73,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional
     public void manage(final Long id, final TransactionStatus status) throws EntityNotFoundException {
         final Transaction transaction = Optional
-                .ofNullable(repository.findByIdAndFromUsers(id, SecurityHelper.getCurrentUserId()))
+                .ofNullable(repository.findByIdAndFromUsers_Id(id, SecurityHelper.getCurrentUserId()))
                 .orElseThrow(() -> new EntityNotFoundException("transaction.not.found", id));
 
         transaction.setStatus(status);

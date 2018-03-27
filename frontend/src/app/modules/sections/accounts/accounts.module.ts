@@ -4,14 +4,12 @@ import { AccountsComponent } from './accounts.component';
 import { AccountsRoutingModule } from './accounts-routing.module';
 import { AccountsResolver } from './accounts.resolver';
 import { MatButtonModule } from '@angular/material';
-import { AccountCreateModule } from '../account-create/account-create.module';
 
 @NgModule({
   imports: [
     CommonModule,
     AccountsRoutingModule,
-    MatButtonModule,
-    AccountCreateModule
+    MatButtonModule
   ],
   declarations: [ AccountsComponent ],
   exports: [ AccountsComponent ],

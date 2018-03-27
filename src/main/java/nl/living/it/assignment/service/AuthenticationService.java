@@ -2,6 +2,8 @@ package nl.living.it.assignment.service;
 
 import nl.living.it.assignment.dto.LoginRequestDto;
 import nl.living.it.assignment.dto.LoginResponseDto;
+import nl.living.it.assignment.dto.UserDto;
+import nl.living.it.assignment.exception.EntityNotFoundException;
 
 /**
  * @author a.zenkovich
@@ -9,4 +11,5 @@ import nl.living.it.assignment.dto.LoginResponseDto;
  */
 public interface AuthenticationService {
     LoginResponseDto login(final LoginRequestDto loginRequestDto);
+    UserDto getMe() throws EntityNotFoundException;
 }

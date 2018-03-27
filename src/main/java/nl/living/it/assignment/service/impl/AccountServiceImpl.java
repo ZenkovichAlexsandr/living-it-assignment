@@ -2,21 +2,25 @@ package nl.living.it.assignment.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import nl.living.it.assignment.auth.SecurityHelper;
+import nl.living.it.assignment.dto.AccountDetailsDto;
 import nl.living.it.assignment.dto.AccountDto;
 import nl.living.it.assignment.dto.AccountListDto;
 import nl.living.it.assignment.exception.BusinessException;
 import nl.living.it.assignment.exception.EntityNotFoundException;
 import nl.living.it.assignment.exception.IllegalEntityStateException;
 import nl.living.it.assignment.model.Account;
-import nl.living.it.assignment.model.User;
+import nl.living.it.assignment.model.Transaction;
 import nl.living.it.assignment.repository.AccountRepository;
-import nl.living.it.assignment.repository.UserRepository;
+import nl.living.it.assignment.repository.TransactionRepository;
 import nl.living.it.assignment.service.AccountService;
+import nl.living.it.assignment.service.transformers.AccountListTransformer;
+import nl.living.it.assignment.service.transformers.AccountTransformer;
+import nl.living.it.assignment.service.transformers.TransactionListTransformer;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -27,13 +31,17 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository repository;
-    private final UserRepository userRepository;
+    private final AccountTransformer transformer;
+    private final AccountListTransformer listTransformer;
+    private final UserTransformer userTransformer;
+    private final TransactionRepository transactionRepository;
+    private final TransactionListTransformer transactionTransformer;
 
     @Override
     public List<AccountListDto> findAll() {
         return repository.findAllByUsersId(SecurityHelper.getCurrentUserId())
                 .stream()
-                .map(it -> new AccountListDto(it.getId(), it.getName(), it.getMoney()))
+                .map(listTransformer::transform)
                 .collect(Collectors.toList());
     }
 
@@ -41,20 +49,29 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto create(final AccountDto account) throws BusinessException {
         validateAccount(account);
 
-        final Set<User> users = account.getUsers()
-                .stream()
-                .map(this::getUser)
-                .collect(Collectors.toSet());
+        final Account newAccount = repository.save(transformer.transform(account));
+        return transformer.transform(newAccount);
+    }
 
-        final Account newAccount = repository.save(new Account(account.getName(), account.getMoney(), users));
+    @Override
+    public AccountDetailsDto findOne(final Long id) throws EntityNotFoundException {
+        final Long userId = SecurityHelper.getCurrentUserId();
+        final Account account = Optional.ofNullable(repository.findByIdAndUsersId(id, userId))
+                .orElseThrow(() -> new EntityNotFoundException("account.not.found", id));
 
-        return AccountDto.builder()
-                .name(newAccount.getName())
-                .money(newAccount.getMoney())
-                .users(newAccount.getUsers()
+        final List<Transaction> transactions = transactionRepository
+                .findAllByFromIdOrToId(account.getId(), account.getId());
+
+        return AccountDetailsDto.builder()
+                .name(account.getName())
+                .users(account.getUsers()
                         .stream()
-                        .map(User::getId)
-                        .collect(Collectors.toSet()))
+                        .map(userTransformer::transform)
+                        .collect(Collectors.toList()))
+                .transactions(transactions
+                        .stream()
+                        .map(transactionTransformer::transform)
+                        .collect(Collectors.toList()))
                 .build();
     }
 
@@ -66,9 +83,5 @@ public class AccountServiceImpl implements AccountService {
         if (account.getMoney() < 0) {
             throw new IllegalEntityStateException("account.money.negative");
         }
-    }
-
-    private User getUser(final Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("user.not.found", id));
     }
 }

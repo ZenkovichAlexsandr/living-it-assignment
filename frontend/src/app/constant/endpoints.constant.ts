@@ -2,10 +2,12 @@ import { environment } from '../../environments/environment';
 
 class Auth {
   static readonly login = `${environment.gateway}/auth/login`;
+  static readonly getMe = `${environment.gateway}/auth/me`;
 }
 
 class Accounts {
   static readonly base = `${environment.gateway}/account`;
+  static readonly findOne = (id: number) => `${Accounts.base}/${id}`;
 }
 
 class User {
