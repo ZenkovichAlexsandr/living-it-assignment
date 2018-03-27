@@ -4,6 +4,7 @@ export class States {
   // Authentication
   static readonly LOGIN = 'login';
 
-  static readonly PAGE = 'page';
+  static readonly ACCOUNTS = 'accounts';
+  static readonly ACCOUNT_CREATE = `${States.ACCOUNTS}/create`;
   /* tslint:enable */
 }

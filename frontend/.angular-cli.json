@@ -35,7 +35,7 @@
     "styleExt": "scss",
     "component": {},
     "serve": {
-      "port": 4040
+      "port": 8081
     },
     "build": {
       "preserveSymlinks": true

@@ -1,0 +1,41 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="input-wrapper">
+    <mat-form-field>
+      <input matInput placeholder="Name" id="name" name="name"
+             [formControl]="name"
+             [maxLength]="255">
+      <mat-error *ngIf="name.hasError('required')">
+        <span>Name is required</span>
+        <span class="width-fill"></span>
+        <span><mat-icon>warning</mat-icon></span>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="input-wrapper">
+    <mat-form-field>
+      <input matInput placeholder="Money" id="money" name="money"
+             [formControl]="money"
+             [maxLength]="255">
+      <mat-error *ngIf="money.hasError('required')">
+        <span>Money is required</span>
+        <span class="width-fill"></span>
+        <span><mat-icon>warning</mat-icon></span>
+      </mat-error>
+      <mat-error *ngIf="money.hasError('format')">
+        <span>Format should be like 0.00</span>
+        <span class="width-fill"></span>
+        <span><mat-icon>warning</mat-icon></span>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-select placeholder="Users" [formControl]="users" multiple>
+        <mat-option *ngFor="let user of userList" [value]="user.id">{{user.fullName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <button mat-raised-button class="button" name="action" type="submit">Save</button>
+</form>

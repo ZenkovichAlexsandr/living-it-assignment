@@ -11,9 +11,8 @@ export class AuthInterceptor implements HttpInterceptor {
     if (Endpoints.isSecured(req.url)) {
       req = req.clone({
         setHeaders: {
-          'Authorization': localStorage.getItem(AuthConstants.AUTH_TOKEN_NAME),
-        },
-        withCredentials: true
+          'Authorization': 'Bearer ' + localStorage.getItem(AuthConstants.AUTH_TOKEN_NAME),
+        }
       });
     }
 

@@ -14,6 +14,7 @@ import nl.living.it.assignment.repository.AccountRepository;
 import nl.living.it.assignment.repository.TransactionRepository;
 import nl.living.it.assignment.service.TransactionService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -58,7 +59,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<TransactionListDto> findByStatus(final TransactionStatus status) {
-        return repository.findByStatusAndFromUsers(status, SecurityHelper.getCurrentUserId())
+        return repository.findAllByStatusAndFromUsers(status, SecurityHelper.getCurrentUserId())
                 .stream()
                 .map(it -> new TransactionListDto(it.getId(),
                         it.getCreationDate(),
@@ -68,6 +69,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    @Transactional
     public void manage(final Long id, final TransactionStatus status) throws EntityNotFoundException {
         final Transaction transaction = Optional
                 .ofNullable(repository.findByIdAndFromUsers(id, SecurityHelper.getCurrentUserId()))
@@ -79,7 +81,15 @@ public class TransactionServiceImpl implements TransactionService {
             transaction.setApprovalDate(LocalDateTime.now());
         }
 
+        final Account from = transaction.getFrom();
+        final Account to = transaction.getTo();
+
+        from.setMoney(from.getMoney() - transaction.getMoney());
+        to.setMoney(to.getMoney() + transaction.getMoney());
+
         repository.save(transaction);
+        accountRepository.save(from);
+        accountRepository.save(to);
     }
 
     private Account getAccount(final Long id) throws EntityNotFoundException {

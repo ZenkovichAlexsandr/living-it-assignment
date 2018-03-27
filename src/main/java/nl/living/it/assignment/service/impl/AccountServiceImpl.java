@@ -31,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<AccountListDto> findAll() {
-        return repository.findAllByUsers(SecurityHelper.getCurrentUserId())
+        return repository.findAllByUsersId(SecurityHelper.getCurrentUserId())
                 .stream()
                 .map(it -> new AccountListDto(it.getId(), it.getName(), it.getMoney()))
                 .collect(Collectors.toList());

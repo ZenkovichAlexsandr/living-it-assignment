@@ -4,8 +4,18 @@ class Auth {
   static readonly login = `${environment.gateway}/auth/login`;
 }
 
+class Accounts {
+  static readonly base = `${environment.gateway}/account`;
+}
+
+class User {
+  static readonly lookup = `${environment.gateway}/user`;
+}
+
 export class Endpoints {
   static readonly AUTH = Auth;
+  static readonly ACCOUNTS = Accounts;
+  static readonly USER = User;
 
   static readonly notSecuredEndpoints = [
     Auth.login,

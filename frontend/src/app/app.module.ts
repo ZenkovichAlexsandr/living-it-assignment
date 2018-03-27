@@ -15,6 +15,8 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/observable/forkJoin';
 import { HeaderModule } from './modules/components/header/header.module';
+import { ToastNotificationsModule } from './modules/components/toast-notifications/toast-notifications.module';
+import { SpinnerModule } from './modules/components/spinner/spinner.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { HeaderModule } from './modules/components/header/header.module';
     AppRoutingModule,
     InterceptorsModule,
     BrowserAnimationsModule,
-    HeaderModule
+    HeaderModule,
+    ToastNotificationsModule,
+    SpinnerModule
   ],
   providers: [],
   bootstrap: [ AppComponent ]

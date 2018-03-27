@@ -3,6 +3,7 @@ package nl.living.it.assignment.repository;
 import nl.living.it.assignment.model.Transaction;
 import nl.living.it.assignment.model.TransactionStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -10,7 +11,8 @@ import java.util.List;
  * @author a.zenkovich
  * @since 24.03.18.
  */
+@Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    List<Transaction> findByStatusAndFromUsers(TransactionStatus status, Long userId);
+    List<Transaction> findAllByStatusAndFromUsers(TransactionStatus status, Long userId);
     Transaction findByIdAndFromUsers(Long id, Long userId);
 }

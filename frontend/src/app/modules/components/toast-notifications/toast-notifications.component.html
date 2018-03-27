@@ -1,0 +1,12 @@
+<div class="toast {{ type }}" *ngIf="isOpened" [@notificationAnimation]>
+      <span class="toast-icon {{ type }}">
+        <mat-icon>{{ icon }}</mat-icon>
+      </span>
+  <span class="toast-message text-field">
+        <p class="toast-message-item" *ngFor="let message of messages" [innerHTML]="message"></p>
+      </span>
+  <span class="width-fill"></span>
+  <span class="toast-close" (click)="onClose()" *ngIf="closable">
+        <mat-icon>close</mat-icon>
+      </span>
+</div>

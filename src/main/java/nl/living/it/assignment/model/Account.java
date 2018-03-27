@@ -40,7 +40,7 @@ public class Account extends BaseEntity {
 
     @ManyToMany
     @JoinTable(name = Account.USER_ACCOUNT_JOIN_TABLE,
-            joinColumns = @JoinColumn(name = User.JOIN_COLUMN),
-            inverseJoinColumns = @JoinColumn(name = Account.JOIN_COLUMN))
+            joinColumns = @JoinColumn(name = Account.JOIN_COLUMN),
+            inverseJoinColumns = @JoinColumn(name = User.JOIN_COLUMN))
     private Set<User> users = new HashSet<>();
 }

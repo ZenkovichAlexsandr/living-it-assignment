@@ -22,7 +22,12 @@ export class AuthenticationService {
       headers
     }).do(token => {
       localStorage.setItem(AuthConstants.AUTH_TOKEN_NAME, token.token);
-      this.router.navigateByUrl(States.PAGE);
+      this.router.navigateByUrl(States.ACCOUNTS);
     });
+  }
+
+  logOut() {
+    localStorage.removeItem(AuthConstants.AUTH_TOKEN_NAME);
+    this.router.navigateByUrl(States.LOGIN);
   }
 }

@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Route, Router, CanLoad } from '@angular/router';
-import { AuthConstants } from '../constant/auth.constant';
-
 import { SecurityService } from '../services/security.service';
 
 @Injectable()
@@ -19,10 +17,7 @@ export class LoginGuard implements CanActivate, CanLoad {
   }
 
   checkLogin(): boolean {
-    const isLogout = !!localStorage.getItem(AuthConstants.LOGOUT_ACTION_NAME);
-    localStorage.removeItem(AuthConstants.LOGOUT_ACTION_NAME);
-
-    if (isLogout || !this.securityService.isLoggedIn()) {
+    if (!this.securityService.isLoggedIn()) {
       return true;
     }
 

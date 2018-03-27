@@ -28,6 +28,7 @@
             <column name="NAME" type="${string.type}">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ACCOUNT_NAME_UNIQUE"/>
             </column>
+            <column name="MONEY" type="${float.type}"/>
         </createTable>
     </changeSet>
 
@@ -112,14 +113,15 @@
                                  referencedTableName="ACCOUNTS"
                                  referencedColumnNames="ID"/>
     </changeSet>
-    
+
     <changeSet id="ADD_USER" author="zenkovich.alexsandr@gmail.com">
         <insert tableName="USERS">
             <column name="ID" value="1"/>
             <column name="FIRST_NAME" value="Alexander"/>
             <column name="LAST_NAME" value="Zenkovich"/>
             <column name="USERNAME" value="a.zenkovich"/>
-            <column name="PASSWORD" value="fb435aeb0bc0afc52a5a96108857888c1d7314a6282cf2ef619001928558df72052d4c40a58a864e"/>
+            <column name="PASSWORD"
+                    value="fb435aeb0bc0afc52a5a96108857888c1d7314a6282cf2ef619001928558df72052d4c40a58a864e"/>
         </insert>
     </changeSet>
 

@@ -1,0 +1,71 @@
+@import '../../../../styles/variables';
+
+.toast {
+  display: flex;
+  justify-items: center;
+  position: absolute;
+
+  width: 569px;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  border: 1px solid;
+
+  z-index: 500001;
+
+  &.error {
+    border-color: $error-color;
+  }
+
+  &.success {
+    border-color: $success-color;
+  }
+
+  &.info {
+    border-color: $info-color;
+  }
+
+  background-color: white;
+
+  .toast-icon {
+    display: flex;
+    min-width: 65px;
+    min-height: 65px;
+    align-self: stretch;
+    color: white;
+
+    mat-icon {
+      margin: auto;
+    }
+
+    &.error {
+      background-color: $error-color;
+    }
+
+    &.success {
+      background-color: $success-color;
+    }
+
+    &.info {
+      background-color: $info-color;
+    }
+  }
+
+  .toast-message {
+    align-self: center;
+    padding: 10px;
+
+    color: #263238;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .toast-close {
+    align-self: center;
+    cursor: pointer;
+    padding-right: 10px;
+  }
+}
