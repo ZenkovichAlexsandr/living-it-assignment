@@ -13,7 +13,7 @@ import java.util.List;
  * @since 24.03.18.
  */
 public interface TransactionService {
-    TransactionListDto create(TransactionDto transaction) throws BusinessException;
+    TransactionDto create(TransactionDto transaction) throws BusinessException;
     List<TransactionListDto> findByStatus(TransactionStatus status);
     void manage(Long id, TransactionStatus status) throws EntityNotFoundException;
 }

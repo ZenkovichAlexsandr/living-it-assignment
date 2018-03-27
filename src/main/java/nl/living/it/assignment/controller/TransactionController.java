@@ -36,7 +36,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    public TransactionListDto create(@RequestBody final TransactionDto transaction) throws BusinessException {
+    public TransactionDto create(@RequestBody final TransactionDto transaction) throws BusinessException {
         return service.create(transaction);
     }
 

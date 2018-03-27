@@ -50,6 +50,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="APPROVAL_DATE" type="${timestamp.type}"/>
+            <column name="MONEY" type="${float.type}"/>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="TRANSACTIONS"

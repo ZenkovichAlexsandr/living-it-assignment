@@ -13,5 +13,5 @@ import java.util.List;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
     List<Account> findAllByUsersId(Long userId);
-    Account findByUsers(Long userId);
+    Account findByIdAndUsersId(Long id, Long userId);
 }

@@ -6,5 +6,8 @@ export class States {
 
   static readonly ACCOUNTS = 'accounts';
   static readonly ACCOUNT_CREATE = `${States.ACCOUNTS}/create`;
+
+
+  static readonly TRANSACTION_CREATE = `transactions/create`;
   /* tslint:enable */
 }

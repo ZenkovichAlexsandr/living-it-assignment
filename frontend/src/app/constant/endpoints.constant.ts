@@ -12,9 +12,14 @@ class User {
   static readonly lookup = `${environment.gateway}/user`;
 }
 
+class Transaction {
+  static readonly base = `${environment.gateway}/transaction`;
+}
+
 export class Endpoints {
   static readonly AUTH = Auth;
   static readonly ACCOUNTS = Accounts;
+  static readonly TRANSACTION = Transaction;
   static readonly USER = User;
 
   static readonly notSecuredEndpoints = [

@@ -35,7 +35,11 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository repository;
 
     @Override
-    public TransactionListDto create(final TransactionDto transaction) throws BusinessException {
+    public TransactionDto create(final TransactionDto transaction) throws BusinessException {
+        if (transaction.getFrom().equals(transaction.getTo())) {
+            throw new IllegalEntityStateException("transaction.accounts.same");
+        }
+
         final Account from = getAccount(transaction.getFrom());
 
         if (from.getMoney() < transaction.getMoney()) {
@@ -50,10 +54,10 @@ public class TransactionServiceImpl implements TransactionService {
                 .money(transaction.getMoney())
                 .build());
 
-        return TransactionListDto.builder()
-                .from(newTransaction.getFrom().getName())
-                .to(newTransaction.getTo().getName())
-                .creationDate(newTransaction.getCreationDate())
+        return TransactionDto.builder()
+                .from(newTransaction.getFrom().getId())
+                .to(newTransaction.getTo().getId())
+                .money(newTransaction.getMoney())
                 .build();
     }
 
@@ -93,7 +97,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     private Account getAccount(final Long id) throws EntityNotFoundException {
-        return Optional.ofNullable(accountRepository.findByUsers(id))
+        return Optional.ofNullable(accountRepository.findByIdAndUsersId(id, SecurityHelper.getCurrentUserId()))
                 .orElseThrow(() -> new EntityNotFoundException("account.not.found", id));
     }
 }

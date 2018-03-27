@@ -19,7 +19,11 @@ export class AccountsComponent implements OnInit {
     this.accounts = this.route.snapshot.data[ 'accounts' ]
   }
 
-  create() {
+  createAccount() {
     this.router.navigateByUrl(States.ACCOUNT_CREATE);
+  }
+
+  createTransaction() {
+    this.router.navigateByUrl(States.TRANSACTION_CREATE);
   }
 }
